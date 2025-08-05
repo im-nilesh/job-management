@@ -20,21 +20,23 @@ function HomePage() {
   );
 
   return (
-    <div className="container mt-4">
-      <h2>Available Jobs</h2>
+    <div className="container my-5">
+      <h2 className="text-center fw-bold mb-4">💼 Explore Job Listings</h2>
 
-      <input
-        type="text"
-        className="form-control mb-3"
-        placeholder="Search by title or location..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
+      <div className="mb-4">
+        <input
+          type="text"
+          className="form-control form-control-lg"
+          placeholder="Search by title or location..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
 
-      {filteredJobs.length > 0 ? (
-        filteredJobs.map((job) => <JobCard key={job._id} job={job} />)
+      {filteredJobs.length === 0 ? (
+        <p className="text-muted text-center">No jobs match your search.</p>
       ) : (
-        <p>No jobs found.</p>
+        filteredJobs.map((job) => <JobCard key={job._id} job={job} />)
       )}
     </div>
   );

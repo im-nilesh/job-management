@@ -43,43 +43,69 @@ function AdminPage() {
   };
 
   return (
-    <div className="container mt-4">
-      <h2>Admin Panel</h2>
+    <div className="container my-5">
+      <h2 className="text-center mb-4 fw-bold">🛠️ Admin Job Management</h2>
 
-      <div className="mb-4">
-        <h4>Add New Job</h4>
-        {["title", "company", "location", "description"].map((field) => (
-          <input
-            key={field}
-            className="form-control mb-2"
-            placeholder={field}
-            value={newJob[field]}
-            onChange={(e) => setNewJob({ ...newJob, [field]: e.target.value })}
-          />
-        ))}
-        <button className="btn btn-success" onClick={handleCreate}>
-          Add Job
-        </button>
-      </div>
-
-      <h4>Existing Jobs</h4>
-      {jobs.map((job) => (
-        <div key={job._id} className="card mb-3">
-          <div className="card-body">
-            <h5>{job.title}</h5>
-            <p>
-              {job.company} – {job.location}
-            </p>
-            <p>{job.description}</p>
-            <button
-              className="btn btn-danger btn-sm"
-              onClick={() => handleDelete(job._id)}
-            >
-              Delete
-            </button>
+      <div className="row">
+        {/* Create Job Form */}
+        <div className="col-lg-5 mb-5">
+          <div className="card shadow-sm">
+            <div className="card-header bg-primary text-white">
+              <h5 className="mb-0">Create New Job</h5>
+            </div>
+            <div className="card-body">
+              {["title", "company", "location", "description"].map((field) => (
+                <div className="mb-3" key={field}>
+                  <label className="form-label text-capitalize">{field}</label>
+                  <input
+                    className="form-control"
+                    placeholder={`Enter ${field}`}
+                    value={newJob[field]}
+                    onChange={(e) =>
+                      setNewJob({ ...newJob, [field]: e.target.value })
+                    }
+                  />
+                </div>
+              ))}
+              <button className="btn btn-success w-100" onClick={handleCreate}>
+                ➕ Add Job
+              </button>
+            </div>
           </div>
         </div>
-      ))}
+
+        {/* Job List */}
+        <div className="col-lg-7">
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <h5 className="fw-semibold">All Posted Jobs</h5>
+            <span className="badge bg-secondary">{jobs.length} jobs</span>
+          </div>
+
+          {jobs.length === 0 ? (
+            <p className="text-muted">No jobs added yet.</p>
+          ) : (
+            jobs.map((job) => (
+              <div key={job._id} className="card mb-3 shadow-sm border-0">
+                <div className="card-body">
+                  <h5 className="card-title mb-1">{job.title}</h5>
+                  <h6 className="text-muted mb-2">
+                    {job.company} · {job.location}
+                  </h6>
+                  <p className="card-text">{job.description}</p>
+                  <div className="d-flex justify-content-end">
+                    <button
+                      className="btn btn-outline-danger btn-sm"
+                      onClick={() => handleDelete(job._id)}
+                    >
+                      🗑️ Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
     </div>
   );
 }
