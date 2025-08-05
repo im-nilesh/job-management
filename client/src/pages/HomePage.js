@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+
+import Header from "../components/Header";
+import Hero from "../components/Hero";
+import SearchBar from "../components/SearchBar";
 import JobCard from "../components/JobCard";
+import Footer from "../components/Footer";
 
 function HomePage() {
   const [jobs, setJobs] = useState([]);
@@ -20,24 +25,20 @@ function HomePage() {
   );
 
   return (
-    <div className="container my-5">
-      <h2 className="text-center fw-bold mb-4">💼 Explore Job Listings</h2>
+    <div className="bg-light min-vh-100 d-flex flex-column">
+      <Header />
+      <Hero />
+      <SearchBar value={searchTerm} onChange={setSearchTerm} />
 
-      <div className="mb-4">
-        <input
-          type="text"
-          className="form-control form-control-lg"
-          placeholder="Search by title or location..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+      <div className="container flex-grow-1">
+        {filteredJobs.length === 0 ? (
+          <p className="text-center text-muted">No jobs match your search.</p>
+        ) : (
+          filteredJobs.map((job) => <JobCard key={job._id} job={job} />)
+        )}
       </div>
 
-      {filteredJobs.length === 0 ? (
-        <p className="text-muted text-center">No jobs match your search.</p>
-      ) : (
-        filteredJobs.map((job) => <JobCard key={job._id} job={job} />)
-      )}
+      <Footer />
     </div>
   );
 }
