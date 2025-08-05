@@ -1,6 +1,6 @@
 const express = require("express");
 const Application = require("../models/application");
-const Job = require("../models/Job");
+const Job = require("../models/job");
 const router = express.Router();
 
 // POST /apply/:jobId - submit application
